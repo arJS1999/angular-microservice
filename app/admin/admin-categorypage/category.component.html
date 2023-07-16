@@ -1,0 +1,79 @@
+<h1 *ngIf="categoryList.length == 0" class="blink">
+  There is no Category added yet!
+</h1>
+<button
+  *ngIf="categoryList.length > 0 && !form"
+  mat-raised-button
+  color="primary"
+  (click)="add()"
+>
+  Add Category
+</button>
+<br /><br />
+<table
+  *ngIf="categoryList.length > 0 && !form"
+  mat-table
+  #elseBlock
+  [dataSource]="categoryList"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="Id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Category">
+    <th mat-header-cell *matHeaderCellDef>Category</th>
+    <td mat-cell *matCellDef="let element">{{ element.category_name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Action">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary" (click)="edit(element)">
+        Edit
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let data; columns: displayedColumns"></tr>
+</table>
+<mat-paginator
+  [length]="total_category"
+  [pageSize]="limit"
+  [pageSizeOptions]="[2, 4, 5]"
+  (page)="OnPageChange($event)"
+>
+<br />
+
+<form
+  *ngIf="form"
+  [formGroup]="categoryForm"
+  (ngSubmit)="onSubmit()"
+  class="form-container"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ status }}</mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category Name</mat-label>
+        <input matInput formControlName="name" [(ngModel)]="category_name" />
+        <mat-error *ngIf="name && name.invalid">{{
+          CategoryError()
+        }}</mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="categoryForm.invalid"
+      >
+        Submit
+      </button>
+    </mat-card-content>
+  </mat-card>
+</form>

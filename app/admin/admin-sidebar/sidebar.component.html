@@ -1,0 +1,34 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <mat-list>
+      <h1 mat-subheader style="margin-left: 10%">Dashboard</h1>
+      <br />
+      <mat-list-item
+        ><a routerLink="category"
+          ><fa-icon [icon]="faClipboardList" class="icon"></fa-icon>Category</a
+        ></mat-list-item
+      >
+      <mat-divider></mat-divider>
+      <mat-list-item
+        ><a routerLink="product"
+          ><fa-icon [icon]="faProduct" class="icon"></fa-icon>Product</a
+        ></mat-list-item
+      >
+      <mat-divider></mat-divider>
+      <mat-list-item
+        ><a routerLink="user"
+          ><fa-icon [icon]="faUser" class="icon"></fa-icon>User</a
+        ></mat-list-item
+      >
+      <mat-divider></mat-divider>
+      <mat-list-item
+        ><a routerLink="seller"
+          ><fa-icon [icon]="faUserPlus" class="icon"></fa-icon>Seller</a
+        ></mat-list-item
+      >
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

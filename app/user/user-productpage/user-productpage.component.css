@@ -1,0 +1,9 @@
+.example-card {
+  max-width: 300px;
+  text-align: center;
+}
+
+button,
+mat-card-header {
+  margin: auto;
+}

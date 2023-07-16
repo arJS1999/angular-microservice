@@ -1,0 +1,22 @@
+.blink {
+    animation: blinker 1s infinite;
+    color: red;
+    text-align: center;
+}
+  
+@keyframes blinker {
+    from { opacity: 8.0; }
+    50% { opacity: 0; }
+    to { opacity: 8.0; }
+}
+
+.form-container{
+    margin: 10% auto;
+    width: 30%;
+}
+.full-width{
+    width: 100%;
+}
+.center{
+    margin: auto;
+}

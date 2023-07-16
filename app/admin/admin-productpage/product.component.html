@@ -1,0 +1,151 @@
+<h1 *ngIf="productList.length == 0" class="blink">
+  There is no Product added yet!
+</h1>
+<button *ngIf="!form" mat-raised-button color="primary" (click)="add()">
+  Add Product
+</button>
+<br /><br />
+<table
+  *ngIf="productList.length > 0 && !form"
+  mat-table
+  #elseBlock
+  [dataSource]="productList"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="Id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Product">
+    <th mat-header-cell *matHeaderCellDef>Product</th>
+    <td mat-cell *matCellDef="let element">{{ element.product_name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Price">
+    <th mat-header-cell *matHeaderCellDef>Price</th>
+    <td mat-cell *matCellDef="let element">{{ element.product_price }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Image">
+    <th mat-header-cell *matHeaderCellDef>Image</th>
+    <td mat-cell *matCellDef="let element">
+      <img
+        src="http://localhost:5000/Images/{{ element.product_image }}"
+        height="50px"
+      />
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary" (click)="edit(element)">
+        Edit</button
+      >&nbsp;&nbsp;
+      <button mat-raised-button color="warn" (click)="delete(element)">
+        Delete
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <tr mat-row *matRowDef="let data; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [length]="total_product"
+  [pageSize]="limit"
+  [pageSizeOptions]="[2, 4, 5]"
+  (page)="OnPageChange($event)"
+>
+</mat-paginator>
+<mat-progress-spinner
+  *ngIf="this.productList.length == 0"
+  class="center"
+  [color]="color"
+  [mode]="mode"
+  [value]="value"
+>
+</mat-progress-spinner>
+<mat-progress-spinner
+  *ngIf="this.productList.length == 0"
+  class="center"
+  [color]="color"
+  [mode]="mode"
+  [value]="value"
+>
+</mat-progress-spinner>
+<mat-progress-spinner
+  *ngIf="this.productList.length == 0"
+  class="center"
+  [color]="color"
+  [mode]="mode"
+  [value]="value"
+>
+</mat-progress-spinner>
+<br />
+
+<form
+  *ngIf="form"
+  [formGroup]="productForm"
+  (ngSubmit)="onSubmit()"
+  class="form-container"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ status }}</mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Product Name</mat-label>
+        <input matInput formControlName="name" [(ngModel)]="product_name" />
+        <mat-error *ngIf="name && name.invalid">{{
+          ProductNameError()
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Product price</mat-label>
+        <input matInput formControlName="price" [(ngModel)]="product_price" />
+        <mat-error *ngIf="price && price.invalid">{{
+          ProductPriceError()
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category Id</mat-label>
+        <input matInput formControlName="product" [(ngModel)]="category_id" />
+        <mat-error *ngIf="productId && productId.invalid">{{
+          ProductIdError()
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <ngx-mat-file-input
+          formControlName="image"
+          [(ngModel)]="product_image"
+        ></ngx-mat-file-input>
+        <br />
+        <img
+          *ngIf="preview"
+          src="http://localhost:5000/Images/{{ product_image }}"
+          height="50px"
+        />
+        <mat-error *ngIf="image && image.invalid">{{
+          ProductImageError()
+        }}</mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="productForm.invalid"
+      >
+        Submit
+      </button>
+    </mat-card-content>
+  </mat-card>
+</form>
